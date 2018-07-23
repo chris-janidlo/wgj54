@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,7 +22,21 @@ public class HallController : MonoBehaviour {
 		return halls[midpoint - 1];
 	}}
 
-	bool infinitized;
+	bool infinitized, entered;
+
+	void Update () {
+		if (entered && !infinitized) {
+			scaleFog();
+		}
+	}
+
+	// collider is used to disable fog if you leave before starting infinity
+	void OnTriggerEnter (Collider other) {
+		if (other.tag != "Player") return;
+
+		entered = false;
+		RenderSettings.fog = false;
+	}
 
 	public void Initialize (ZDir direction) {
 		halls = new Dictionary<int, HallSection>(MaxSections);
@@ -59,9 +74,11 @@ public class HallController : MonoBehaviour {
 	void HallTriggerHandler (object o, System.EventArgs e) {
 		HallSection h = (HallSection) o;
 
+		entered = true;
+
 		if (!infinitized) {
 			if (h == halls[midpoint])
-				infinitized = true;
+				infinitize();
 			else
 				return;
 		}
@@ -73,6 +90,38 @@ public class HallController : MonoBehaviour {
 		else if (h == negTrigger) {
 			popRight();
 			SpawnHall(ZDir.Negative);
+		}
+	}
+
+	void infinitize () {
+		infinitized = true;
+
+		GetComponent<Collider>().enabled = false;
+
+		var newLandOffset = new Vector3(100, 100, 100);
+		transform.position += newLandOffset;
+		PlayerMove.Instance.transform.position += newLandOffset;
+	}
+	
+	void scaleFog () {
+		HallSection farPoint = halls[midpoint * 2];
+		float distanceAlong = Mathf.Abs(farPoint.transform.position.z - PlayerMove.Instance.transform.position.z);
+
+		RenderSettings.fog = true;
+		RenderSettings.fogMode = FogMode.ExponentialSquared;
+		RenderSettings.fogDensity = fogDensity(distanceAlong, true);
+	}
+
+	// finds the density for the exponential fog equation so that its value at distance is arbitrarily close to zero
+	float fogDensity (float distance, bool squared) {
+		float alpha = 1000; // this is arbitrarily large
+		float ln = Mathf.Log(alpha);
+
+		if (squared) {
+			return Mathf.Sqrt(ln) / distance;
+		}
+		else {
+			return ln / distance;
 		}
 	}
 

@@ -183,6 +183,11 @@ Prefab:
       propertyPath: m_Radius
       value: 0.2
       objectReference: {fileID: 0}
+    - target: {fileID: 114139888016983304, guid: 3ad2e749e57644ec6b712a2b5a55d534,
+        type: 2}
+      propertyPath: Speed
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3ad2e749e57644ec6b712a2b5a55d534, type: 2}
   m_IsPrefabParent: 0
@@ -216,7 +221,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HallObject: {fileID: 114760739817606992, guid: 0eaadc13c330847ad8f8659bf4f30377,
     type: 2}
-  MaxSections: 7
+  MaxSections: 9
 --- !u!4 &1612305093
 Transform:
   m_ObjectHideFlags: 0
