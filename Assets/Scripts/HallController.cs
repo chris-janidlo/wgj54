@@ -51,7 +51,7 @@ public class HallController : MonoBehaviour {
 
 	HallSection SpawnHall (ZDir direction) {
 		Vector3 loc;
-		if (direction == ZDir.Positive) {
+		if (direction.IsPositive()) {
 			loc = halls[frontierPos].transform.position + Vector3.forward * HallSection.ZLength;
 		}
 		else {
@@ -61,7 +61,7 @@ public class HallController : MonoBehaviour {
 		hall.TriggerHandler += HallTriggerHandler;
 		hall.transform.parent = transform;
 
-		if (direction == ZDir.Positive) {
+		if (direction.IsPositive()) {
 			halls[++frontierPos] = hall;
 		}
 		else {
