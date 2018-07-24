@@ -2,7 +2,7 @@
 
 public static class ZDirMethods {
 	
-	public static ZDir Flip (this ZDir original) {
+	public static ZDir Flipped (this ZDir original) {
 		if (original == ZDir.Positive) {
 			return ZDir.Negative;
 		}
