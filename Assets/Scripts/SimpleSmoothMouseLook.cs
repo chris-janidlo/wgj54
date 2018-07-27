@@ -2,6 +2,7 @@
 // https://forum.unity.com/threads/a-free-simple-smooth-mouselook.73117/
 
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace crass {
 public class SimpleSmoothMouseLook : MonoBehaviour
@@ -31,6 +32,8 @@ public class SimpleSmoothMouseLook : MonoBehaviour
  
     void Update()
     {
+		if (MemoUI.ImageOnScreen) return;
+		
         // Ensure the cursor is always locked when set
         if (lockCursor)
         {

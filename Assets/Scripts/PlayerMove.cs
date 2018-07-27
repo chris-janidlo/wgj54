@@ -17,6 +17,8 @@ public class PlayerMove : MonoBehaviour {
 	}
 	
 	void Update () {
+		if (MemoUI.ImageOnScreen) return;
+		
 		var velocity = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")).normalized * Speed;
 		cc.SimpleMove(transform.TransformDirection(velocity));
 	}
