@@ -22,25 +22,21 @@ public class HallController : MonoBehaviour {
 		return halls[midpoint - 1];
 	}}
 
-	bool infinitized, entered;
+	bool infinitized, initialized;
 
 	void Update () {
-		if (entered && !infinitized) {
+		if (initialized && !infinitized) {
 			scaleFog();
 		}
 	}
 
-	// collider is used to disable fog if you leave before starting infinity
-	void OnTriggerEnter (Collider other) {
-		if (other.tag != "Player") return;
-
-		entered = false;
-		RenderSettings.fog = false;
-	}
-
 	public void Initialize (ZDir direction) {
+		initialized = true;
+
+		Vector3 pos = transform.position + (direction.IsPositive() ? Vector3.forward : Vector3.back) * HallSection.ZLength / 2;
+
 		halls = new Dictionary<int, HallSection>(MaxSections);
-		halls[0] = Instantiate(HallObject, transform.position, Quaternion.identity);
+		halls[0] = Instantiate(HallObject, pos, Quaternion.identity);
 		halls[0].TriggerHandler += HallTriggerHandler;
 		halls[0].transform.parent = transform;
 		
@@ -74,8 +70,6 @@ public class HallController : MonoBehaviour {
 	void HallTriggerHandler (object o, System.EventArgs e) {
 		HallSection h = (HallSection) o;
 
-		entered = true;
-
 		if (!infinitized) {
 			if (h == halls[midpoint])
 				infinitize();
@@ -96,9 +90,7 @@ public class HallController : MonoBehaviour {
 	void infinitize () {
 		infinitized = true;
 
-		GetComponent<Collider>().enabled = false;
-
-		var newLandOffset = new Vector3(100, 100, 100);
+		var newLandOffset = new Vector3(137, 137, 137);
 		transform.position += newLandOffset;
 		PlayerMove.Instance.transform.position += newLandOffset;
 	}

@@ -6,9 +6,10 @@ public class RoomController : MonoBehaviour {
 
 	public List<Room> RoomPrefabs; // TODO: pool these
 	public Room Bedroom;
-	public bool nextIsBedroom;
 
 	public RoomTrigger BackTrigger, FrontTrigger;
+
+	public HallController HallController;
 
 	ZDir currentRoomDir = ZDir.Negative; // define the direction of the room as the direction you face when walking into it
 	int nextRoomIndex = 0;
@@ -16,9 +17,11 @@ public class RoomController : MonoBehaviour {
 	Room currentRoom, waitingRoom;
 	RoomTrigger currentRoomTrigger, waitingRoomTrigger;
 
-	bool doorTriggered;
+	bool nextIsBedroom, doorTriggered, hallInitialized;
 
 	void Start () {
+		Memo.MemoPickedUp += onMemoPickedUp;
+
 		currentRoom = Room.Initialize(Bedroom, currentRoomDir);
 
 		currentRoomTrigger = BackTrigger;
@@ -26,6 +29,14 @@ public class RoomController : MonoBehaviour {
 	}
 	
 	void Update () {
+		if (RoomPrefabs.Count == 0 && !nextIsBedroom) {
+			if (!hallInitialized) {
+				HallController.Initialize(currentRoomDir.Flipped());
+				hallInitialized = true;
+			}
+			return;
+		}
+		
 		if (currentRoomTrigger.PlayerEnter) {
 			var nextPrefab = nextIsBedroom ? Bedroom : RoomPrefabs[nextRoomIndex];
 			waitingRoom = Room.Initialize(nextPrefab, currentRoomDir.Flipped());
@@ -37,12 +48,14 @@ public class RoomController : MonoBehaviour {
 			Destroy(waitingRoom.gameObject);
 		}
 		if (waitingRoomTrigger.PlayerExit && !doorTriggered) {
+			// this REQUIRES that the memos are placed in such a way that players can NEVER pick them up from inside the trigger zone
+
 			StartCoroutine(tryCloseDoor());
 
 			Destroy(currentRoom.gameObject);
 			currentRoom = waitingRoom;
 			currentRoomDir = currentRoomDir.Flipped();
-			nextRoomIndex = (nextRoomIndex + 1) % RoomPrefabs.Count;
+			nextRoomIndex = (int) Mathf.Repeat(nextRoomIndex + 1, RoomPrefabs.Count);
 
 			nextIsBedroom = false;
 
@@ -67,6 +80,12 @@ public class RoomController : MonoBehaviour {
 		if (other.tag == "Player") {
 			doorTriggered = false;
 		}
+	}
+
+	void onMemoPickedUp (object o, System.EventArgs e) {
+		nextIsBedroom = true;
+		nextRoomIndex = (int) Mathf.Repeat(nextRoomIndex - 1, RoomPrefabs.Count);
+		RoomPrefabs.Remove(RoomPrefabs[nextRoomIndex]);
 	}
 
 }
