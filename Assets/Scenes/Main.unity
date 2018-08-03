@@ -356,8 +356,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24b9b7e9834ec486f8b4db5b4cd5cb66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PromptText: (click) Pick Up
-  DismissText: (click) Dismiss
+  DismissPrompt: 
 --- !u!1 &674854697
 GameObject:
   m_ObjectHideFlags: 0
@@ -638,6 +637,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9500000, guid: 1b0f1401d582245bbbeea8ac2620f205, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 61610e91238064d4196623c7075f0dd5, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1b0f1401d582245bbbeea8ac2620f205, type: 3}
   m_IsPrefabParent: 0
@@ -683,7 +686,7 @@ Prefab:
     - target: {fileID: 114139888016983304, guid: 3ad2e749e57644ec6b712a2b5a55d534,
         type: 2}
       propertyPath: Speed
-      value: 1.3
+      value: 1.7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3ad2e749e57644ec6b712a2b5a55d534, type: 2}
@@ -832,7 +835,21 @@ Transform:
 GameObject:
   m_PrefabParentObject: {fileID: 100002, guid: 1b0f1401d582245bbbeea8ac2620f205, type: 3}
   m_PrefabInternal: {fileID: 1335411938}
---- !u!65 &1698967210
+--- !u!114 &1698967210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1698967206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7420287561ef74bd6a75156ba6cacf75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MouseOverText: (click) Open
+  OpenPrompt: (click) Open
+  ClosePrompt: (click) Close
+--- !u!65 &1698967211
 BoxCollider:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
@@ -949,6 +966,26 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 60}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &2079202809 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1406066115703530, guid: 3ad2e749e57644ec6b712a2b5a55d534,
+    type: 2}
+  m_PrefabInternal: {fileID: 1462775654}
+--- !u!114 &2079202816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2079202809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e7be91efda6f4d488aca460b83cd5ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionMask:
+    serializedVersion: 2
+    m_Bits: 4294967291
+  Distance: 1.7
 --- !u!1 &2085346635
 GameObject:
   m_ObjectHideFlags: 0

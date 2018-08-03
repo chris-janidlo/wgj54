@@ -2,27 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Memo : MonoBehaviour {
+public class Memo : Clickable {
 
 	public static event System.EventHandler MemoPickedUp;
-	public static bool MouseHover { get; private set; }
 
 	public Sprite ScreenImage;
 
-	public void OnMouseDown () {
+	void Start () {
+		MouseOverText = "(click) Pick Up";
+	}
+
+	public override void Click () {
 		if (MemoPickedUp != null) {
 			MemoPickedUp(this, null);
 		}
-		MouseHover = false;
 		Destroy(gameObject);
-	}
-
-	public void OnMouseEnter () {
-		MouseHover = true;
-	}
-
-	public void OnMouseExit () {
-		MouseHover = false;
 	}
 
 }
