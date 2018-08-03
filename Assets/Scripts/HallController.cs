@@ -9,6 +9,8 @@ public class HallController : MonoBehaviour {
 	[Tooltip("Must be a positive odd number.")]
 	public int MaxSections;
 
+	public FogSettings EndFog;
+
 	Dictionary<int, HallSection> halls; // increasing index -> increasing z position
 	int frontierPos = 0, frontierNeg = 0;
 
@@ -32,6 +34,8 @@ public class HallController : MonoBehaviour {
 
 	public void Initialize (ZDir direction) {
 		initialized = true;
+
+		Memo.MemoPickedUp += onMemoPickedUp;
 
 		Vector3 pos = transform.position + (direction.IsPositive() ? Vector3.forward : Vector3.back) * HallSection.ZLength / 2;
 
@@ -90,6 +94,8 @@ public class HallController : MonoBehaviour {
 	void infinitize () {
 		infinitized = true;
 
+		FogManager.Instance.SetFogDistance(MaxSections);
+
 		var newLandOffset = new Vector3(137, 137, 137);
 		transform.position += newLandOffset;
 		PlayerMove.Instance.transform.position += newLandOffset;
@@ -99,22 +105,7 @@ public class HallController : MonoBehaviour {
 		HallSection farPoint = halls[midpoint * 2];
 		float distanceAlong = Mathf.Abs(farPoint.transform.position.z - PlayerMove.Instance.transform.position.z);
 
-		RenderSettings.fog = true;
-		RenderSettings.fogMode = FogMode.ExponentialSquared;
-		RenderSettings.fogDensity = fogDensity(distanceAlong, true);
-	}
-
-	// finds the density for the exponential fog equation so that its value at distance is arbitrarily close to zero
-	float fogDensity (float distance, bool squared) {
-		float alpha = 1000; // this is arbitrarily large
-		float ln = Mathf.Log(alpha);
-
-		if (squared) {
-			return Mathf.Sqrt(ln) / distance;
-		}
-		else {
-			return ln / distance;
-		}
+		FogManager.Instance.SetFogDistance(distanceAlong);
 	}
 
 	void popLeft () {
@@ -125,6 +116,10 @@ public class HallController : MonoBehaviour {
 	void popRight () {
 		Destroy(halls[frontierPos].gameObject);
 		halls[frontierPos--] = null;
+	}
+
+	void onMemoPickedUp (object o, System.EventArgs e) {
+		FogManager.Instance.Fade(EndFog, 3.7f);
 	}
 
 }

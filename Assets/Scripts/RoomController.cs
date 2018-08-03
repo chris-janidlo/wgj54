@@ -83,6 +83,8 @@ public class RoomController : MonoBehaviour {
 	}
 
 	void onMemoPickedUp (object o, System.EventArgs e) {
+		if (RoomPrefabs.Count == 0) return;
+		
 		nextIsBedroom = true;
 		nextRoomIndex = (int) Mathf.Repeat(nextRoomIndex - 1, RoomPrefabs.Count);
 		RoomPrefabs.Remove(RoomPrefabs[nextRoomIndex]);
