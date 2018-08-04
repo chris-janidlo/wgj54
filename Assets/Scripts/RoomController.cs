@@ -43,15 +43,22 @@ public class RoomController : MonoBehaviour {
 		}
 
 		if (currentRoomTrigger.PlayerExit && !doorTriggered) {
-			StartCoroutine(tryCloseDoor());
-
-			Destroy(waitingRoom.gameObject);
+			StartCoroutine(destroyRoutint(true));
 		}
 		if (waitingRoomTrigger.PlayerExit && !doorTriggered) {
 			// this REQUIRES that the memos are placed in such a way that players can NEVER pick them up from inside the trigger zone
+			StartCoroutine(destroyRoutint(false));
+		}
+	}
 
-			StartCoroutine(tryCloseDoor());
-
+	IEnumerator destroyRoutint (bool stillInCurrentRoom) {
+		Door.Instance.TryCloseDoor();
+		yield return new WaitWhile(() => Door.Instance.Open);
+		
+		if (stillInCurrentRoom) {
+			Destroy(waitingRoom.gameObject);
+		}
+		else {
 			Destroy(currentRoom.gameObject);
 			currentRoom = waitingRoom;
 			currentRoomDir = currentRoomDir.Flipped();
@@ -62,12 +69,6 @@ public class RoomController : MonoBehaviour {
 			currentRoomTrigger = currentRoomDir.IsPositive() ? FrontTrigger : BackTrigger;
 			waitingRoomTrigger = currentRoomDir.IsNegative() ? FrontTrigger : BackTrigger;
 		}
-	}
-
-	IEnumerator tryCloseDoor () {
-		// close door animation
-		// yield return new WaitUntil(door is closed)
-		yield return new WaitForEndOfFrame();
 	}
 
 	void OnTriggerEnter (Collider other) {

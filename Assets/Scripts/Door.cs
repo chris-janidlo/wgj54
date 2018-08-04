@@ -7,21 +7,24 @@ public class Door : Clickable {
 	public static Door Instance;
 
 	public string OpenPrompt, ClosePrompt;
+	public bool Open;
 
 	Animator animator;
-	bool open, animating;
+	bool animating;
 
 	void Start () {
+		Instance = this;
+		
 		animator = transform.parent.GetComponent<Animator>();
 		MouseOverText = OpenPrompt;
 	}
 
 	public override void Click () {
-		StartCoroutine(doorRoutine(!open));
+		StartCoroutine(doorRoutine(!Open));
 	}
 
 	public void TryCloseDoor () {
-		if (!open) return;
+		if (!Open) return;
 		StartCoroutine(doorRoutine(false));
 	}
 
@@ -36,11 +39,11 @@ public class Door : Clickable {
 		yield return new WaitForEndOfFrame();
 		yield return new WaitWhile(() => animator.GetCurrentAnimatorStateInfo(0).IsName(stateName));
 		
-		open = opensIfThisIsTrue;
+		Open = opensIfThisIsTrue;
 		
 		animating = false;
 
-		MouseOverText = open ? ClosePrompt : OpenPrompt;
+		MouseOverText = Open ? ClosePrompt : OpenPrompt;
 	}
 
 }
