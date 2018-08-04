@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b5a4ec0f469cb4bcea2756cd5b5a593a
+guid: b4cad5b75db544af89d5259dc6aa854a
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
@@ -41,7 +41,27 @@ ModelImporter:
     4300010: Cube
     7400000: Default Take
     9500000: //RootNode
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material
+    second: {fileID: 2100000, guid: 0a2adedffead248e49bacc37984c1ea2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material_002
+    second: {fileID: 2100000, guid: 010fa1e2efe5d4a4183b3a9db0c3fcf9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material_003__Nuclear-logo_png
+    second: {fileID: 2100000, guid: 7ca0723521e1747aba80eab3ac073193, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material_004__Nuclear-logo_png
+    second: {fileID: 2100000, guid: 31bf7b14a0e54471eaf58a306eae718a, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
@@ -80,7 +100,7 @@ ModelImporter:
     importCameras: 1
     importLights: 1
     swapUVChannels: 0
-    generateSecondaryUV: 0
+    generateSecondaryUV: 1
     useFileUnits: 1
     optimizeMeshForGPU: 1
     keepQuads: 0

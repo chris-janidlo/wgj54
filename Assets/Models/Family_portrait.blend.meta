@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 47c1be0b12a2f4fdba65b5ce5446b63c
+guid: 0e08082807c6a49b0b2fc0d42a0e5c35
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
@@ -12,7 +12,17 @@ ModelImporter:
     4300000: Cube
     7400000: Default Take
     9500000: //RootNode
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material
+    second: {fileID: 2100000, guid: c537cbd71928243cea9f1ec2c6960daf, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material_001__Family-portrait-texture_png
+    second: {fileID: 2100000, guid: 1aac17f324570421591b716a45d55729, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
@@ -51,7 +61,7 @@ ModelImporter:
     importCameras: 1
     importLights: 1
     swapUVChannels: 0
-    generateSecondaryUV: 0
+    generateSecondaryUV: 1
     useFileUnits: 1
     optimizeMeshForGPU: 1
     keepQuads: 0
