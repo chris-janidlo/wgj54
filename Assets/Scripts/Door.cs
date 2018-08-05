@@ -33,13 +33,14 @@ public class Door : Clickable {
 		MouseOverText = "";
 
 		animating = true;
+		if (opensIfThisIsTrue) Open = true; // open the instant it isn't closed
 
 		string stateName = opensIfThisIsTrue ? "Open" : "Close";
 		animator.Play(stateName);
 		yield return new WaitForEndOfFrame();
 		yield return new WaitWhile(() => animator.GetCurrentAnimatorStateInfo(0).IsName(stateName));
 		
-		Open = opensIfThisIsTrue;
+		if (!opensIfThisIsTrue) Open = false; // only say you're closed when fully closed
 		
 		animating = false;
 

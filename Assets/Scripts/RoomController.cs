@@ -17,12 +17,13 @@ public class RoomController : MonoBehaviour {
 	Room currentRoom, waitingRoom;
 	RoomTrigger currentRoomTrigger, waitingRoomTrigger;
 
-	bool nextIsBedroom, doorTriggered, hallInitialized;
+	bool nextIsBedroom, hallInitialized, doorTriggered, doorClosing;
 
 	void Start () {
 		Memo.MemoPickedUp += onMemoPickedUp;
 
 		currentRoom = Room.Initialize(Bedroom, currentRoomDir);
+		waitingRoom = Room.Initialize(RoomPrefabs[nextRoomIndex], currentRoomDir.Flipped());
 
 		currentRoomTrigger = BackTrigger;
 		waitingRoomTrigger = FrontTrigger;
@@ -36,39 +37,35 @@ public class RoomController : MonoBehaviour {
 			}
 			return;
 		}
-		
-		if (currentRoomTrigger.PlayerEnter && !doorTriggered) {
-			var nextPrefab = nextIsBedroom ? Bedroom : RoomPrefabs[nextRoomIndex];
-			waitingRoom = Room.Initialize(nextPrefab, currentRoomDir.Flipped());
-		}
 
-		if (currentRoomTrigger.PlayerExit && !doorTriggered) {
-			StartCoroutine(destroyRoutine(true));
-		}
+		if (doorClosing) return;
+
 		if (waitingRoomTrigger.PlayerExit && !doorTriggered) {
-			// this REQUIRES that the memos are placed in such a way that players can NEVER pick them up from inside the trigger zone
-			StartCoroutine(destroyRoutine(false));
+			StartCoroutine(roomSwitch());
 		}
 	}
 
-	IEnumerator destroyRoutine (bool stillInCurrentRoom) {
+	// this REQUIRES that the memos are placed in such a way that players can NEVER pick them up from inside the trigger zone
+	IEnumerator roomSwitch () {
+		// close door
+		doorClosing = true;
 		Door.Instance.TryCloseDoor();
 		yield return new WaitWhile(() => Door.Instance.Open);
+		doorClosing = false;
 		
-		if (stillInCurrentRoom) {
-			Destroy(waitingRoom.gameObject);
-		}
-		else {
-			Destroy(currentRoom.gameObject);
-			currentRoom = waitingRoom;
-			currentRoomDir = currentRoomDir.Flipped();
-			nextRoomIndex = (int) Mathf.Repeat(nextRoomIndex + 1, RoomPrefabs.Count);
+		// switch rooms
+		Destroy(currentRoom.gameObject);
+		currentRoom = waitingRoom;
+		currentRoomDir = currentRoomDir.Flipped();
 
-			nextIsBedroom = false;
+		nextRoomIndex = (int) Mathf.Repeat(nextRoomIndex + 1, RoomPrefabs.Count);
+		var nextPrefab = nextIsBedroom ? Bedroom : RoomPrefabs[nextRoomIndex];
+		waitingRoom = Room.Initialize(nextPrefab, currentRoomDir.Flipped());
 
-			currentRoomTrigger = currentRoomDir.IsPositive() ? FrontTrigger : BackTrigger;
-			waitingRoomTrigger = currentRoomDir.IsNegative() ? FrontTrigger : BackTrigger;
-		}
+		nextIsBedroom = false;
+
+		currentRoomTrigger = currentRoomDir.IsPositive() ? FrontTrigger : BackTrigger;
+		waitingRoomTrigger = currentRoomDir.IsNegative() ? FrontTrigger : BackTrigger;
 	}
 
 	void OnTriggerEnter (Collider other) {
