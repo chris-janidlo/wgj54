@@ -37,21 +37,21 @@ public class RoomController : MonoBehaviour {
 			return;
 		}
 		
-		if (currentRoomTrigger.PlayerEnter) {
+		if (currentRoomTrigger.PlayerEnter && !doorTriggered) {
 			var nextPrefab = nextIsBedroom ? Bedroom : RoomPrefabs[nextRoomIndex];
 			waitingRoom = Room.Initialize(nextPrefab, currentRoomDir.Flipped());
 		}
 
 		if (currentRoomTrigger.PlayerExit && !doorTriggered) {
-			StartCoroutine(destroyRoutint(true));
+			StartCoroutine(destroyRoutine(true));
 		}
 		if (waitingRoomTrigger.PlayerExit && !doorTriggered) {
 			// this REQUIRES that the memos are placed in such a way that players can NEVER pick them up from inside the trigger zone
-			StartCoroutine(destroyRoutint(false));
+			StartCoroutine(destroyRoutine(false));
 		}
 	}
 
-	IEnumerator destroyRoutint (bool stillInCurrentRoom) {
+	IEnumerator destroyRoutine (bool stillInCurrentRoom) {
 		Door.Instance.TryCloseDoor();
 		yield return new WaitWhile(() => Door.Instance.Open);
 		
