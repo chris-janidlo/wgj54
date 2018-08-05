@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RoomController : MonoBehaviour {
 
-	public List<Room> RoomPrefabs; // TODO: pool these
+	public List<Room> RoomPrefabs;
 	public Room Bedroom;
 
 	public RoomTrigger BackTrigger, FrontTrigger;
@@ -19,18 +19,27 @@ public class RoomController : MonoBehaviour {
 
 	bool nextIsBedroom, hallInitialized, doorTriggered, doorClosing;
 
+	List<Room> pooledRooms;
+
 	void Start () {
 		Memo.MemoPickedUp += onMemoPickedUp;
 
-		currentRoom = Room.Initialize(Bedroom, currentRoomDir);
-		waitingRoom = Room.Initialize(RoomPrefabs[nextRoomIndex], currentRoomDir.Flipped());
+		pooledRooms = new List<Room>(RoomPrefabs.Count);
+		for (int i = 0; i < RoomPrefabs.Count; i++) {
+			pooledRooms.Add(Instantiate(RoomPrefabs[i]));
+			pooledRooms[i].Despawn();
+		}
+		Bedroom = Room.Initialize(Bedroom, currentRoomDir);
+
+		currentRoom = Bedroom;
+		waitingRoom = pooledRooms[nextRoomIndex].Respawn(currentRoomDir.Flipped());
 
 		currentRoomTrigger = BackTrigger;
 		waitingRoomTrigger = FrontTrigger;
 	}
 	
 	void Update () {
-		if (RoomPrefabs.Count == 0 && !nextIsBedroom) {
+		if (pooledRooms.Count == 0 && !nextIsBedroom) {
 			if (!hallInitialized) {
 				HallController.Initialize(currentRoomDir.Flipped());
 				hallInitialized = true;
@@ -54,13 +63,13 @@ public class RoomController : MonoBehaviour {
 		doorClosing = false;
 		
 		// switch rooms
-		Destroy(currentRoom.gameObject);
+		currentRoom.Despawn();
 		currentRoom = waitingRoom;
 		currentRoomDir = currentRoomDir.Flipped();
 
-		nextRoomIndex = (int) Mathf.Repeat(nextRoomIndex + 1, RoomPrefabs.Count);
-		var nextPrefab = nextIsBedroom ? Bedroom : RoomPrefabs[nextRoomIndex];
-		waitingRoom = Room.Initialize(nextPrefab, currentRoomDir.Flipped());
+		nextRoomIndex = (int) Mathf.Repeat(nextRoomIndex + 1, pooledRooms.Count);
+		var nextPrefab = nextIsBedroom ? Bedroom : pooledRooms[nextRoomIndex];
+		waitingRoom = nextPrefab.Respawn(currentRoomDir.Flipped());
 
 		nextIsBedroom = false;
 
@@ -81,11 +90,11 @@ public class RoomController : MonoBehaviour {
 	}
 
 	void onMemoPickedUp (object o, System.EventArgs e) {
-		if (RoomPrefabs.Count == 0) return;
+		if (pooledRooms.Count == 0) return;
 		
 		nextIsBedroom = true;
-		nextRoomIndex = (int) Mathf.Repeat(nextRoomIndex - 1, RoomPrefabs.Count);
-		RoomPrefabs.Remove(RoomPrefabs[nextRoomIndex]);
+		nextRoomIndex = (int) Mathf.Repeat(nextRoomIndex - 1, pooledRooms.Count);
+		pooledRooms.Remove(pooledRooms[nextRoomIndex]);
 	}
 
 }

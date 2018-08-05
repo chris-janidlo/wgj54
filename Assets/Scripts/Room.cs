@@ -11,4 +11,16 @@ public class Room : MonoBehaviour {
 		return r;
 	}
 
+	// moves an already instantiated room
+	public Room Respawn (ZDir direction) {
+		transform.position = Vector3.zero;
+		transform.eulerAngles = new Vector3(0, direction.IsNegative() ? 0 : 180, 0);
+		return this;
+	}
+
+	// moves already instantiated room out of player view
+	public void Despawn () {
+		transform.position = new Vector3(731, 731, 731);
+	}
+
 }
