@@ -161,7 +161,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &108631134
 GameObject:
@@ -835,7 +835,7 @@ RectTransform:
   - {fileID: 521898084}
   - {fileID: 108631135}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -885,8 +885,74 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1938413065
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 100000, guid: c6a7f3997672547e88e9937cfd552644,
+    type: 3}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1938413068}
+  - component: {fileID: 1938413067}
+  - component: {fileID: 1938413066}
+  m_Layer: 0
+  m_Name: Bookshelf full
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!54 &1938413066
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1938413065}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!95 &1938413067
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 9500000, guid: c6a7f3997672547e88e9937cfd552644,
+    type: 3}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1938413065}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: c6a7f3997672547e88e9937cfd552644, type: 3}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!4 &1938413068
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 400000, guid: c6a7f3997672547e88e9937cfd552644,
+    type: 3}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1938413065}
+  m_LocalRotation: {x: -0.32835707, y: -0, z: -0, w: 0.9445537}
+  m_LocalPosition: {x: 0.36, y: 5.73, z: -4.27}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: -38.338, y: 0, z: 0}
 --- !u!1 &1991388972
 GameObject:
   m_ObjectHideFlags: 0
@@ -929,7 +995,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RoomPrefabs:
   - {fileID: 114113617257196220, guid: afc4c1ac794bc4049bf0a70b86d41eca, type: 2}
-  - {fileID: 114110917431153116, guid: c20b8a4d84a864cd497f425e7b04e63e, type: 2}
+  - {fileID: 114484943989881066, guid: 204a1918ab4c6497a8f8ae3e537e62c5, type: 2}
   - {fileID: 114230429610407070, guid: 861c3bee02e8f45a5b6980e7b5b9d3c1, type: 2}
   - {fileID: 114497519416437580, guid: 9ebbc1b7120e64ec8b56e2a80c275c7b, type: 2}
   Bedroom: {fileID: 114598243874244402, guid: 12abc94a79d784b7582138237d26b7d7, type: 2}
@@ -951,7 +1017,7 @@ Transform:
   - {fileID: 783431401}
   - {fileID: 490864325}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2050006419
 GameObject:

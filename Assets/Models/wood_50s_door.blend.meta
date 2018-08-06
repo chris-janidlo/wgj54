@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: 1b0f1401d582245bbbeea8ac2620f205
 ModelImporter:
-  serializedVersion: 22
+  serializedVersion: 23
   fileIDToRecycleName:
     100000: Cube
     100002: Cube_001
@@ -20,7 +20,17 @@ ModelImporter:
     7400000: Open
     7400002: _open
     9500000: //RootNode
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material_001
+    second: {fileID: 2100000, guid: 57758c09cc35e4a9db1c7098514fbe45, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material_002
+    second: {fileID: 2100000, guid: c5f11dde5ae054c2280925e1ab876d50, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
@@ -127,6 +137,8 @@ ModelImporter:
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
     useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 1
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0

@@ -15,12 +15,21 @@ public class Room : MonoBehaviour {
 	public Room Respawn (ZDir direction) {
 		transform.position = Vector3.zero;
 		transform.eulerAngles = new Vector3(0, direction.IsNegative() ? 0 : 180, 0);
+
+		switchLights(true);
 		return this;
 	}
 
 	// moves already instantiated room out of player view
 	public void Despawn () {
+		switchLights(false);
 		transform.position = new Vector3(731, 731, 731);
+	}
+
+	void switchLights (bool value) {
+		foreach (var light in GetComponentsInChildren<Light>()) {
+			light.enabled = value;
+		}
 	}
 
 }
