@@ -887,6 +887,48 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1924314207
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4430762699638018, guid: 971769618707e4f60b2b0f3c1cceec66, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4430762699638018, guid: 971769618707e4f60b2b0f3c1cceec66, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4430762699638018, guid: 971769618707e4f60b2b0f3c1cceec66, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4430762699638018, guid: 971769618707e4f60b2b0f3c1cceec66, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4430762699638018, guid: 971769618707e4f60b2b0f3c1cceec66, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4430762699638018, guid: 971769618707e4f60b2b0f3c1cceec66, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4430762699638018, guid: 971769618707e4f60b2b0f3c1cceec66, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4430762699638018, guid: 971769618707e4f60b2b0f3c1cceec66, type: 2}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 971769618707e4f60b2b0f3c1cceec66, type: 2}
+  m_IsPrefabAsset: 0
 --- !u!1 &1938413065
 GameObject:
   m_ObjectHideFlags: 0
@@ -996,8 +1038,7 @@ MonoBehaviour:
   RoomPrefabs:
   - {fileID: 114113617257196220, guid: afc4c1ac794bc4049bf0a70b86d41eca, type: 2}
   - {fileID: 114484943989881066, guid: 204a1918ab4c6497a8f8ae3e537e62c5, type: 2}
-  - {fileID: 114230429610407070, guid: 861c3bee02e8f45a5b6980e7b5b9d3c1, type: 2}
-  - {fileID: 114497519416437580, guid: 9ebbc1b7120e64ec8b56e2a80c275c7b, type: 2}
+  - {fileID: 114735585698619200, guid: 971769618707e4f60b2b0f3c1cceec66, type: 2}
   Bedroom: {fileID: 114598243874244402, guid: 12abc94a79d784b7582138237d26b7d7, type: 2}
   BackTrigger: {fileID: 783431399}
   FrontTrigger: {fileID: 674854698}
