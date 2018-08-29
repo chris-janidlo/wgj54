@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Room : MonoBehaviour {
 
+	public bool IsCurrentRoom;
+
 	// define the direction of the room as the direction you face when walking into it
 	public static Room Initialize (Room room, ZDir direction) {
 		var r = Instantiate(room);
