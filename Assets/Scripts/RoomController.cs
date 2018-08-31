@@ -68,7 +68,7 @@ public class RoomController : MonoBehaviour {
 		currentRoomDir = currentRoomDir.Flipped();
 
 		nextRoomIndex = (int) Mathf.Repeat(nextRoomIndex + 1, pooledRooms.Count);
-		var nextPrefab = nextIsBedroom ? Bedroom : pooledRooms[nextRoomIndex];
+		var nextPrefab = pooledRooms[nextRoomIndex];
 		waitingRoom = nextPrefab.Respawn(currentRoomDir.Flipped());
 
 		nextIsBedroom = false;
@@ -95,6 +95,9 @@ public class RoomController : MonoBehaviour {
 		nextIsBedroom = true;
 		nextRoomIndex = (int) Mathf.Repeat(nextRoomIndex - 1, pooledRooms.Count);
 		pooledRooms.Remove(pooledRooms[nextRoomIndex]);
+
+		waitingRoom.Despawn();
+		waitingRoom = Bedroom.Respawn(currentRoomDir.Flipped());
 	}
 
 }
