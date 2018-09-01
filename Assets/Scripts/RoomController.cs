@@ -17,7 +17,7 @@ public class RoomController : MonoBehaviour {
 	Room currentRoom, waitingRoom;
 	RoomTrigger currentRoomTrigger, waitingRoomTrigger;
 
-	bool nextIsBedroom, hallInitialized, doorTriggered, doorClosing;
+	bool nextIsBedroom, destroyCurrentRoomOnSwitch, hallInitialized, doorTriggered, doorClosing;
 
 	List<Room> pooledRooms;
 
@@ -64,12 +64,19 @@ public class RoomController : MonoBehaviour {
 		
 		// switch rooms
 		currentRoom.Despawn();
+		if (destroyCurrentRoomOnSwitch) {
+			destroyCurrentRoomOnSwitch = false;
+			Destroy(currentRoom.gameObject); // ... onSwitch
+		}
+
 		currentRoom = waitingRoom;
 		currentRoomDir = currentRoomDir.Flipped();
 
-		nextRoomIndex = (int) Mathf.Repeat(nextRoomIndex + 1, pooledRooms.Count);
-		var nextPrefab = pooledRooms[nextRoomIndex];
-		waitingRoom = nextPrefab.Respawn(currentRoomDir.Flipped());
+		if (pooledRooms.Count > 0) {
+			nextRoomIndex = (int) Mathf.Repeat(nextRoomIndex + 1, pooledRooms.Count);
+			var nextPrefab = pooledRooms[nextRoomIndex];
+			waitingRoom = nextPrefab.Respawn(currentRoomDir.Flipped());
+		}
 
 		nextIsBedroom = false;
 
@@ -94,9 +101,16 @@ public class RoomController : MonoBehaviour {
 		
 		nextIsBedroom = true;
 		nextRoomIndex = (int) Mathf.Repeat(nextRoomIndex - 1, pooledRooms.Count);
+
 		pooledRooms.Remove(pooledRooms[nextRoomIndex]);
+		destroyCurrentRoomOnSwitch = true;
+
+		nextRoomIndex = (int) Mathf.Repeat(nextRoomIndex - 1, pooledRooms.Count);
 
 		waitingRoom.Despawn();
+		if (waitingRoom.twin != null) {
+			Destroy(waitingRoom.gameObject);
+		}
 		waitingRoom = Bedroom.Respawn(currentRoomDir.Flipped());
 	}
 

@@ -17,6 +17,7 @@ public class FaceCoverDeactivate : MonoBehaviour {
 		counter--;
 		if (counter <= 0) {
 			Destroy(gameObject);
+			Memo.MemoPickedUp -= onMemoPickedUp;
 		}
 	}
 }
